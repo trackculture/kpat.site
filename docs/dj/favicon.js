@@ -8,46 +8,29 @@ const faviconFrames = [
     'GIF/DJ6.png',
     'GIF/DJ7.png'
 ];
- 
+
 // Set the initial frame index and animation speed (in milliseconds)
 let currentFrame = 0;
 const animationSpeed = 200; // Change frame every 200ms
 
-// Static fallback favicon URL
-const staticFavicon = 'images/static-favicon.png';
-
-// Function to check browser compatibility
-function isAnimationSupported() {
-    const ua = navigator.userAgent;
-    const isIOS = /iPhone|iPad|iPod/i.test(ua);
-    const isSafari = /Safari/i.test(ua) && !/Chrome/i.test(ua);
-
-    return !(isIOS && isSafari);
-}
-
 // Function to update the favicon
 function updateFavicon() {
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.rel = 'icon';
-    link.href = faviconFrames[currentFrame];
-    document.head.appendChild(link);
+  const link = document.getElementById('favicon');
 
-    currentFrame = (currentFrame + 1) % faviconFrames.length;
+  // Update the favicon's href to the current frame
+  link.href = faviconFrames[currentFrame];
+
+  // Update the frame index, looping back to 0 if at the end
+  currentFrame = (currentFrame + 1) % faviconFrames.length;
 }
 
-// Initialize favicon based on browser compatibility
-function initializeFavicon() {
-    if (isAnimationSupported()) {
-        // Start the animation loop
-        setInterval(updateFavicon, animationSpeed);
-    } else {
-        // Use the static favicon as fallback
-        const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-        link.rel = 'icon';
-        link.href = staticFavicon;
-        document.head.appendChild(link);
-    }
+// Function to initialize the favicon animation
+function initializeFaviconAnimation() {
+  // Check if the browser supports animated favicons (basic check, more can be added)
+  if (document.visibilityState === 'visible' && 'querySelector' in document) {
+    setInterval(updateFavicon, animationSpeed);
+  }
 }
 
-// Start the favicon setup
-initializeFavicon();
+// Start the favicon animation when the page is fully loaded
+document.addEventListener('DOMContentLoaded', initializeFaviconAnimation);
