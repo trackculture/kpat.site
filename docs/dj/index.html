@@ -6,7 +6,7 @@
     <script src="favicon.js" defer></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>DJ KPAT<blink>_</blink></title>
+    <title>DJ KPAT_</title>
     <style>
       html, body {
         height: 100%;
@@ -49,11 +49,21 @@
       a:hover {
         text-decoration: none;
       }
+
+      @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+
+      #blinking-underscore {
+        animation: blink 1s step-start infinite;
+      }
     </style>
   </head>
 
   <body>
-    <h1>kpat_</h1>
+    <h1>kpat<span id="blinking-underscore">_</span></h1>
     <div class="job-title">DJ</div>
     <p>UCONN</p>
 
